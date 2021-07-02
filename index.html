@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Css & clock</title>
+    <style>
+        .Clock {
+            width: 200px;
+            border: 10px solid red;
+            border-radius: 50%;
+            text-align: center;
+            position: relative;
+            height: 200px;
+            margin: 50px auto;
+            box-shadow: 1px 1px 9px black;
+            padding: 25px;
+        }
+        .clockFace {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .hand {
+            height: 3px;
+            background: black;
+            transform: rotate(90deg) ;
+            -webkit-transform: rotate(90deg);
+            transform-origin:100% ;
+        }
+        .hoursHand {
+            position: absolute;
+            top: 50%;
+            background: #00ff66;
+            width: 36%;
+            left: 14%;
+        }
+        .minutesHand {
+            position: absolute;
+            top: 50%;
+            left: 7%;
+            width: 43%;
+            background: #a55d13;
+        }
+        .secondsHand {
+            position: absolute;
+            top: 50%;
+            width: 50%;
+        }
+        
+
+            /*Digital clock css start */
+        div#mydate {
+            height: 50px;
+            text-align: center;
+            background: black;
+            color: white;
+            font-family: arial;
+            font-size: 40px;
+            padding: 5px;
+        }
+             /*Digital clock css END */
+    </style>
+    
+   
+</head>
+<body>
+        <!-- Digital Clock -->
+    <div id="mydate"></div> 
+        <!-- Digital Clock -->
+
+        <!-- Analog Clock -->
+    <div class="Clock">
+        <div class="clockFace">
+            <div class="hoursHand hand"></div>
+            <div class="minutesHand hand"></div>
+            <div class="secondsHand hand"></div>
+        </div>
+    </div>
+        <!-- Analog Clock -->
+
+    <script>
+        
+        
+         // Analog clock code START
+        setInterval(function(){
+            var date= new Date();
+            var seconds = date.getSeconds();
+            var secondsDegree = ((seconds/60)*360)+90;
+            var minutes = date.getMinutes();
+            var minutesDegree = ((minutes/60)*360)+90;
+            var hours = date.getHours();
+            var hoursDegree = ((hours/12)*360)+90;
+            document.querySelector('.secondsHand').style.transform = `rotate(${secondsDegree}deg)`;
+            document.querySelector('.minutesHand').style.transform = `rotate(${minutesDegree}deg)`;
+            document.querySelector('.hoursHand').style.transform = `rotate(${hoursDegree}deg)`;
+        },1000);
+            // Analog clock code END
+
+        //Digital clock code start
+            setInterval(function(){
+                var date = new Date();
+                var seconds = date.getSeconds();
+                var minutes = date.getMinutes();
+                var hourO = date.getHours();
+
+                var ampm = hourO >= 12 ? 'PM' : 'AM';  // conditional ternary operator method
+                var hourO = hourO % 12;
+                var hourO = hourO ? hourO : 12; // the hour '0' should be '12'
+                var hourO = hourO < 10 ? '0'+hourO : hourO;
+                var minutes = minutes < 10 ? '0'+minutes : minutes;
+                var seconds= seconds < 10 ? '0'+seconds :seconds;
+
+                var totalTime= hourO+':'+minutes+':'+seconds+' '+ampm;
+                document.querySelector('#mydate').innerHTML=totalTime;
+            },1000);
+      // Digital code End
+    </script>
+</body>
+</html>
